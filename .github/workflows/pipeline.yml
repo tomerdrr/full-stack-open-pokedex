@@ -32,3 +32,10 @@ jobs:
         run: npm run test:e2e
         env:
           CI: true
+      
+      - name: Trigger deployment
+        uses: sws2apps/render-deployment@main #consider using pin for dependabot auto update
+        with:
+          serviceId: srv-cpbk00mn7f5s73fdvdf0
+          apiKey: rnd_FuCPe3M5hS8VhZjH1Hgky7yfcXh9
+          multipleDeployment: false #optional, default true
