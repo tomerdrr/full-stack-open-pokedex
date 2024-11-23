@@ -2,3 +2,5 @@ For linting we use ESLint, prettier, etc. For testing we can use different libra
 Beside Jenkins and github-actions we can use cloud based servers.
 To decide which option is better we need to know more on the project, for example how many developers are working on it, if the project require more resources like a gpu.
 Cloud based are easier to setup, but they are less flexible.
+
+change for exercise 11.13
