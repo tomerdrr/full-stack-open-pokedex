@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: '20'
       - name: Install dependencies
         run: npm install
 
@@ -27,15 +27,11 @@ jobs:
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
-      
+
       - name: Run end-to-end tests
         run: npm run test:e2e
         env:
           CI: true
-      
+
       - name: Trigger deployment
-        uses: sws2apps/render-deployment@main #consider using pin for dependabot auto update
-        with:
-          serviceId: srv-csvii3btq21c73epjk20
-          apiKey: rnd_FuCPe3M5hS8VhZjH1Hgky7yfcXh9
-          multipleDeployment: false #optional, default true
+        run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
