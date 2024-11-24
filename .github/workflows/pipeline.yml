@@ -38,7 +38,7 @@ jobs:
           CI: true
 
       - name: Trigger deployment
-        if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip') }}
+        if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message), ' '), '#skip') }}
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
 
   tag_release:
@@ -48,8 +48,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Debug commit message
+        run: |
+          echo "Commit message: ${{ github.event.head_commit.message }}"
+
       - name: Bump version and push tag
-        if: ${{ !contains(github.event.head_commit.message, '#skip') }}
+        if: ${{ !contains(join(toJson(github.event.commits.*.message), ' '), '#skip') }}
         uses: anothrNick/github-tag-action@1.64.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
