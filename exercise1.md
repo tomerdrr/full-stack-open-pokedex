@@ -4,3 +4,4 @@ To decide which option is better we need to know more on the project, for exampl
 Cloud based are easier to setup, but they are less flexible.
 
 version patch test
+skip test
