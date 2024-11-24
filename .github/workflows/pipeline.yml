@@ -38,13 +38,8 @@ jobs:
           CI: true
 
       - name: Trigger deployment
-        if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
+        if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message),' '), '#skip')}}
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
-
-      - name: skip condition
-        env:
-          ISSKIP: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
-        run: echo "$ISSKIP"
 
   tag_release:
     needs: [simple_deployment_pipeline]
@@ -53,19 +48,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Debug commit message
-        run: |
-          echo "Commit message: ${{ github.event.head_commit.message }}"
-
       - name: Bump version and push tag
-        if: ${{ !contains(join(github.event.commits.*.message, ' '), '#skip') }}
+        if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message),' '), '#skip')}}
         uses: anothrNick/github-tag-action@1.64.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DEFAULT_BUMP: ${{ github.event_name == 'push' && 'minor' || 'patch' }}
+          DEFAULT_BUMP: patch
           WITH_V: true
-
-      - name: skip condition
-        env:
-          ISSKIP: ${{ !contains(join(github.event.commits.*.message, ' '), '#skip') }}
-        run: echo "$ISSKIP"
