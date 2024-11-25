@@ -73,7 +73,7 @@ jobs:
             [{
               "title": "Build succeeded!",
               "color": 32768,
-              "description": "to https://full-stack-open-pokedex-8pfy.onrender.com by ${{github.event.commits[0].committer.name || 'Unknown commit'}} passed the tests.", 
+              "description": "to https://full-stack-open-pokedex-8pfy.onrender.com by ${{github.event.commits[0].committer.name || 'Unknown commit'}}.", 
               "footer": {
                 "text": "Severity: Informational - ${{ env.FORMATTED_DATE }}"
               }
