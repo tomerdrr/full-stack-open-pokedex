@@ -1,8 +1,8 @@
 name: Health Check
 
 on:
-  schedule:
-    - cron: "30 * * * *" # Every monday at 17:00 UTC
+  # schedule:
+  # - cron: "30 * * * *" # Every monday at 17:00 UTC
 
   push:
     branches:
